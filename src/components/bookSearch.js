@@ -23,6 +23,7 @@ class BookSearch extends Component {
             series: "Hank the Cowdog",
             seriesNo: 1,
             title: "The Case of the Wandering Goat",
+            yearPublished: 2010,
             isbn: new Date().toISOString(),
         },
         {
@@ -30,6 +31,7 @@ class BookSearch extends Component {
             series: "Hank the Cowdog",
             seriesNo: 2,
             title: "The Sheet Monster",
+            yearPublished: 2015,
             isbn: new Date().toISOString(),
         },
         {
@@ -37,6 +39,13 @@ class BookSearch extends Component {
             series: "Hank the Cowdog",
             seriesNo: 3,
             title: "Eddie the Rac",
+            yearPublished: 2017,
+            isbn: new Date().toISOString(),
+        },
+        {
+            id: 4,
+            title: "Once Upon A Time In America",
+            yearPublished: 1950,
             isbn: new Date().toISOString(),
         },
     ],)

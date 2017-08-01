@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.jpg';
 import './App.css';
-// import Book from './entities/book.js';
+import Book from './entities/book.js';
 import User from './entities/user.js';
 import BookSearch from './components/bookSearch.js';
 import SearchResults from './components/searchResults.js';
@@ -23,6 +23,7 @@ class App extends Component {
     }
 
     this.loadBooks = this.loadBooks.bind(this);
+    this.loadBook = this.loadBook.bind(this);
     this.loadUser = this.loadUser.bind(this);
     this.showUser = this.showUser.bind(this);
   }
@@ -30,6 +31,12 @@ class App extends Component {
   loadBooks(books) {
     this.setState({
       bookList: books,
+    })
+  }
+
+  loadBook(book) {
+    this.setState({
+      currentBook: book,
     })
   }
 
@@ -75,7 +82,8 @@ class App extends Component {
           </div>
           <div>
             <BookSearch onSelectedBooks={this.loadBooks}/>
-            <SearchResults books={this.state.bookList} />
+            <SearchResults books={this.state.bookList} onSelectedBook={this.loadBook}/>
+            <Book currentBook={this.state.currentBook} />
           </div>
           
         </div>

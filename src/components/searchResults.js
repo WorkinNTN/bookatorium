@@ -2,26 +2,27 @@ import React, { Component } from 'react';
 import Book from '../entities/book.js';
 
 class SearchResults extends Component {
+    bookPicked(selectedBook) {
+        this.props.onSelectedBook(selectedBook);
+    }
 
-  render () {
-    const books = this.props.books;
-    const listItems = (books === null) ? (null) : books.map((book) =>
-        // Correct! Key should be specified inside the array.
-        <ListItem key={book.id}
-                book={book} />
-    );
+    render () {
+        const books = this.props.books;
+        let listItems = null
+        if (books)
+        {
+            listItems = books.map((book) => 
+            <span key={book.id}>
+                <li onClick={this.bookPicked.bind(this, book)}><Book currentBook={book} srchResult/></li>
+            </span> );
+        }
 
-    return (
-        <ul>
-        {listItems}
-        </ul>
-    )
-  }
-}
-
-function ListItem({book}) {
-  // Correct! There is no need to specify the key here:
-  return (<li id={'sr' + book.id}><Book currentBook={book} srchResult/></li>);
+        return (
+          <ul>
+            {listItems}
+          </ul>
+        );
+    }
 }
 
 export default SearchResults;
