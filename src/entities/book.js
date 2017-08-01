@@ -9,18 +9,25 @@ class Book extends Component {
         const srchResult = this.props.srchResult;
         return (
             <div>
-                {emptyBook ? (null) : (
+            {
+                (!emptyBook) &&
+                <span>
                     <div>
-                        <div>
-                            <span style={{fontWeight:"bold"}}>Title:</span>
-                            <span style={{paddingLeft:"10px"}}>{this.props.currentBook.title}</span>
-                        </div>
-                        <div>
-                            <span style={{fontWeight:"bold"}}>ISBN:</span>
-                            <span style={{paddingLeft:"10px"}}>{this.props.currentBook.isbn}</span>
-                        </div>
+                        <span style={{fontWeight:"bold"}}>Title:</span>
+                        <span style={{paddingLeft:"10px"}}>{this.props.currentBook.title}</span>
                     </div>
-                )}
+                    <div>
+                        <span style={{fontWeight:"bold"}}>ISBN:</span>
+                        <span style={{paddingLeft:"10px"}}>{this.props.currentBook.isbn}</span>
+                    </div>
+                    {
+                        (!srchResult) &&
+                        <div>
+
+                        </div>
+                    }
+                </span>
+            }
             </div>
         );
     }
