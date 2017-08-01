@@ -9,17 +9,12 @@ class User extends Component {
     
         return (
             <div>
-                {
-                    (emptyUser || !this.props.showUser) ? 
-                    (
-                        (null)
-                    ) : 
-                    (
-                        <div>
-                            {this.props.currentUser.firstName}
-                        </div>
-                    )
-                }
+            {
+                (!emptyUser && this.props.showUser) &&
+                <div>
+                    {this.props.currentUser.firstName}
+                </div>
+            }
             </div>
         );
     }
