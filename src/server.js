@@ -1,6 +1,8 @@
+// To run this test server type the following from a command line within the bookatorium directory
+//  node src/server.js
 var http = require('http');
 
-var data = [
+var books = [
         {
             id: 1,
             series: "Hank the Cowdog",
@@ -43,5 +45,5 @@ var data = [
 
 http.createServer( (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-    res.end( JSON.stringify(req.url))
+    res.end( JSON.stringify({requestingUrl: req.url, data: books}))
 }).listen(8080);
