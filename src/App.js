@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import logo from './logo.jpg';
 import './App.css';
-import Book from './entities/book.js';
+// import Book from './entities/book.js';
 import User from './entities/user.js';
 import BookSearch from './components/bookSearch.js';
+import SearchResults from './components/searchResults.js';
 
 /**
  * Bookatorium app
@@ -81,27 +82,6 @@ class App extends Component {
       </div>
     );
   }
-}
-
-function ListItem({book}) {
-  // Correct! There is no need to specify the key here:
-  return (<li id={'sr' + book.id}><Book currentBook={book} srchResult/></li>);
-}
-
-function  SearchResults(props)
-{
-  const books = props.books;
-  const listItems = (books === null) ? (null) : books.map((book) =>
-    // Correct! Key should be specified inside the array.
-    <ListItem key={book.id}
-              book={book} />
-  );
-  
-  return (
-    <ul>
-      {listItems}
-    </ul>
-  )
 }
 
 export default App;
