@@ -13,7 +13,7 @@ class SearchResults extends Component {
         {
             listItems = books.map((book) => 
             <span key={book.id}>
-                <li onClick={this.bookPicked.bind(this, book)}><Book currentBook={book} srchResult/></li>
+                <li onClick={() => this.bookPicked(book)}><Book currentBook={book} srchResult/></li>
             </span> );
         }
 
