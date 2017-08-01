@@ -12,6 +12,24 @@ class Book extends Component {
             {
                 (!emptyBook) &&
                 <span>
+                    {
+                        (!srchResult) &&
+                        <div>
+                            {
+                                (this.props.currentBook.series) &&
+                                <span>
+                                <div>
+                                    <span style={{fontWeight:"bold"}}>Series:</span>
+                                    <span style={{paddingLeft:"10px"}}>{this.props.currentBook.series}</span>
+                                </div>
+                                <div>
+                                    <span style={{fontWeight:"bold"}}>Series #:</span>
+                                    <span style={{paddingLeft:"10px"}}>{this.props.currentBook.seriesNo}</span>
+                                </div>
+                                </span>
+                            }
+                        </div>
+                    }
                     <div>
                         <span style={{fontWeight:"bold"}}>Title:</span>
                         <span style={{paddingLeft:"10px"}}>{this.props.currentBook.title}</span>
@@ -23,7 +41,8 @@ class Book extends Component {
                     {
                         (!srchResult) &&
                         <div>
-
+                            <span style={{fontWeight:"bold"}}>Year Published:</span>
+                            <span style={{paddingLeft:"10px"}}>{this.props.currentBook.yearPublished}</span>
                         </div>
                     }
                 </span>

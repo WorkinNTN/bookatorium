@@ -4,6 +4,7 @@ import './App.css';
 import Book from './entities/book.js';
 import User from './entities/user.js';
 import BookSearch from './components/bookSearch.js';
+import SearchResults from './components/searchResults.js';
 
 /**
  * Bookatorium app
@@ -22,6 +23,7 @@ class App extends Component {
     }
 
     this.loadBooks = this.loadBooks.bind(this);
+    this.loadBook = this.loadBook.bind(this);
     this.loadUser = this.loadUser.bind(this);
     this.showUser = this.showUser.bind(this);
   }
@@ -29,6 +31,12 @@ class App extends Component {
   loadBooks(books) {
     this.setState({
       bookList: books,
+    })
+  }
+
+  loadBook(book) {
+    this.setState({
+      currentBook: book,
     })
   }
 
@@ -74,34 +82,14 @@ class App extends Component {
           </div>
           <div>
             <BookSearch onSelectedBooks={this.loadBooks}/>
-            <SearchResults books={this.state.bookList} />
+            <SearchResults books={this.state.bookList} onSelectedBook={this.loadBook}/>
+            <Book currentBook={this.state.currentBook} />
           </div>
           
         </div>
       </div>
     );
   }
-}
-
-function ListItem({book}) {
-  // Correct! There is no need to specify the key here:
-  return (<li id={'sr' + book.id}><Book currentBook={book} srchResult/></li>);
-}
-
-function  SearchResults(props)
-{
-  const books = props.books;
-  const listItems = (books === null) ? (null) : books.map((book) =>
-    // Correct! Key should be specified inside the array.
-    <ListItem key={book.id}
-              book={book} />
-  );
-  
-  return (
-    <ul>
-      {listItems}
-    </ul>
-  )
 }
 
 export default App;
