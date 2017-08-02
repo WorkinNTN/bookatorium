@@ -62,46 +62,17 @@ const users = [
 
 http.createServer( (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-    let route = parser(req.url);
-    if (route.route === '/INFO') {
+    let urlPacket = parser(req.url);
+    if (urlPacket.route === '/INFO') {
         res.end( JSON.stringify({
             header: req.headers
             , rawHeader: req.rawHeaders
         }));
-    } else if (route.route === '/LOGIN') {
-        if ((!route.parameters) || (route.parameters.length != 2)) {
-            res.end(JSON.stringify({message : 'Incorrect credentials supplied.'}))
-        } else {
-            let usernamePos = 0;
-            let passwordPos = 1;
-            let foundUsername = false;
-            let foundPassword = false;
-
-            foundUsername = (Object.keys(route.parameters[usernamePos]).indexOf('USERNAME') >= 0);
-            if (!foundUsername) {
-                usernamePos = 1;
-                foundUsername = (Object.keys(route.parameters[usernamePos]).indexOf('USERNAME') >= 0);
-            }
-
-            if (foundUsername) {
-                if (usernamePos === 1) { passwordPos = 0;}
-                foundPassword = (Object.keys(route.parameters[passwordPos]).indexOf('PASSWORD') >= 0);
-            }
-
-            if (!route.parameters[usernamePos]['USERNAME']) {foundUsername = false;}
-            if (!route.parameters[passwordPos]['PASSWORD']) {foundPassword = false;}
-
-            if (foundPassword && foundUsername) {
-                let user = users[0];
-                delete user.password;
-                res.end(JSON.stringify({user: user}));
-            } else {
-                res.end(JSON.stringify({message : 'Incorrect credentials supplied.'}))
-            }
-        }
+    } else if (urlPacket.route === '/LOGIN') {
+        login(urlPacket, users, res);
     } else {
         res.end( JSON.stringify({
-            passedIn: route
+            passedIn: urlPacket
         }));
     }
 
@@ -132,3 +103,47 @@ function parser(fullPath) {
     return packet;
 }
 
+function login(option, userList, response)
+{
+    let responseValue = JSON.stringify({message : 'Incorrect credentials supplied.'});
+    
+    if (option.parameters && (option.parameters.length === 2)) {
+        let usernamePos = 0;
+        let passwordPos = 1;
+        let foundUsername = false;
+        let foundPassword = false;
+
+        foundUsername = (Object.keys(option.parameters[usernamePos]).indexOf('USERNAME') >= 0);
+        if (!foundUsername) {
+            usernamePos = 1;
+            foundUsername = (Object.keys(option.parameters[usernamePos]).indexOf('USERNAME') >= 0);
+        }
+
+        if (foundUsername) {
+            if (usernamePos === 1) { passwordPos = 0;}
+            foundPassword = (Object.keys(option.parameters[passwordPos]).indexOf('PASSWORD') >= 0);
+        }
+
+        let userId = option.parameters[usernamePos]['USERNAME'];
+        let password = option.parameters[passwordPos]['PASSWORD'];
+        if (!userId) {foundUsername = false;}
+        if (!password) {foundPassword = false;}
+
+        if (foundPassword && foundUsername) {
+            let validLogin = false;
+            userList.forEach(function(item) {
+                if (item.userId.toUpperCase() === userId.toUpperCase() && item.password === password) {
+                    let user = Object.assign({}, item);
+                    delete user.password;
+                    responseValue = JSON.stringify({user: user});
+                    validLogin = true;
+                }
+            }) 
+            if (!validLogin) {
+                //responseValue = JSON.stringify({userId: userId.toUpperCase(), password: password, object: option});
+            }
+        }
+    }
+
+    response.end(responseValue);
+}
