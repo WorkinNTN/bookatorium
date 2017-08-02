@@ -69,7 +69,8 @@ http.createServer( (req, res) => {
             , rawHeader: req.rawHeaders
         }));
     } else if (urlPacket.route === '/LOGIN') {
-        login(urlPacket, users, res);
+        let loginResponse = login(urlPacket, users);
+        res.end(loginResponse);
     } else {
         res.end( JSON.stringify({
             passedIn: urlPacket
@@ -103,9 +104,9 @@ function parser(fullPath) {
     return packet;
 }
 
-function login(option, userList, response)
+function login(option, userList)
 {
-    let responseValue = JSON.stringify({message : 'Incorrect credentials supplied.'});
+    let responseValue = JSON.stringify({result: 'failure', message : 'Incorrect credentials supplied.'});
     
     if (option.parameters && (option.parameters.length === 2)) {
         let usernamePos = 0;
@@ -135,7 +136,7 @@ function login(option, userList, response)
                 if (item.userId.toUpperCase() === userId.toUpperCase() && item.password === password) {
                     let user = Object.assign({}, item);
                     delete user.password;
-                    responseValue = JSON.stringify({user: user});
+                    responseValue = JSON.stringify({result: 'success', user: user});
                     validLogin = true;
                 }
             }) 
@@ -145,5 +146,5 @@ function login(option, userList, response)
         }
     }
 
-    response.end(responseValue);
+    return responseValue;
 }
