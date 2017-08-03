@@ -62,6 +62,7 @@ const users = [
 
 http.createServer( (req, res) => {
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader("Access-Control-Allow-Origin", "*");
     let urlPacket = parser(req.url);
     if (urlPacket.route === '/INFO') {
         res.end( JSON.stringify({

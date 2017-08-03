@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+var request = require('request');
 
 class BookSearch extends Component {
   constructor(props) {
@@ -13,42 +14,17 @@ class BookSearch extends Component {
     this.setState({value: event.target.value,});
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
     
-    this.props.onSelectedBooks(
-    [
-        {
-            id: 1,
-            series: "Hank the Cowdog",
-            seriesNo: 1,
-            title: "The Case of the Wandering Goat",
-            yearPublished: 2010,
-            isbn: new Date().toISOString(),
-        },
-        {
-            id: 2,
-            series: "Hank the Cowdog",
-            seriesNo: 2,
-            title: "The Sheet Monster",
-            yearPublished: 2015,
-            isbn: new Date().toISOString(),
-        },
-        {
-            id: 3,
-            series: "Hank the Cowdog",
-            seriesNo: 3,
-            title: "Eddie the Rac",
-            yearPublished: 2017,
-            isbn: new Date().toISOString(),
-        },
-        {
-            id: 4,
-            title: "Once Upon A Time In America",
-            yearPublished: 1950,
-            isbn: new Date().toISOString(),
-        },
-    ],)
+    let result = await doSearch(this.state.value);
+    result = JSON.parse(result);
+    let returnValue = [];
+    if (result.result = 'success') {
+      returnValue = result.list;
+    }
+
+    this.props.onSelectedBooks(returnValue);
   }
 
   render() {
@@ -62,6 +38,16 @@ class BookSearch extends Component {
       </form>
     );
   }
+}
+
+function doSearch(searchValue)
+{
+  return new Promise(function(resolve, reject) {
+    request('http://localhost:8080/findbooks/' + searchValue, function(error, response, body) {
+      let result = body;
+      resolve(result)
+    })
+  })
 }
 
 export default BookSearch;
