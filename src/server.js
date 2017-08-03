@@ -41,6 +41,22 @@ const books = [
         yearPublished: 1950,
         isbn: new Date().toISOString(),
     },
+    {
+        id: 6,
+        series: "The Chronicles of Narnia",
+        seriesNo: 2,
+        title: "Prince Caspian",
+        yearPublished: 1951,
+        isbn: new Date().toISOString(),
+    },
+    {
+        id: 7,
+        series: "The Chronicles of Narnia",
+        seriesNo: 3,
+        title: "The Voyage of the Dawn Treader",
+        yearPublished: 1950,
+        isbn: new Date().toISOString(),
+    },
 ]
 
 const users = [

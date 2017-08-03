@@ -20,7 +20,7 @@ class BookSearch extends Component {
     let result = await doSearch(this.state.value);
     result = JSON.parse(result);
     let returnValue = [];
-    if (result.result = 'success') {
+    if (result.result === 'success') {
       returnValue = result.list;
     }
 
