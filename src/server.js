@@ -71,6 +71,9 @@ http.createServer( (req, res) => {
     } else if (urlPacket.route === '/LOGIN') {
         let loginResponse = login(urlPacket, users);
         res.end(loginResponse);
+    } else if (urlPacket.route.indexOf('/FINDBOOKS') === 0) {
+        let fbResponse = findbooks(urlPacket, books);
+        res.end(fbResponse);
     } else {
         res.end( JSON.stringify({
             passedIn: urlPacket
@@ -102,6 +105,41 @@ function parser(fullPath) {
     }
 
     return packet;
+}
+
+function findbooks(option, bookList) {
+    let responseValue = JSON.stringify({result: 'success', message : 'No books matched criteria.'});
+    let searchVal = "";
+
+    if (option.parameters) {
+        let foundSearchVal = (Object.keys(option.parameters[0]).indexOf('SEARCHVALUE') >= 0);
+        if (!foundSearchVal) {
+            responseValue = JSON.stringify({result: 'failure', message : 'Cannont find named parameter SearchValue'});
+        } else {
+            searchVal = option.parameters[0]['SEARCHVALUE'];
+        }
+    } else {
+        searchVal = option.originalPath.toUpperCase().replace("FINDBOOKS","").replace("//", "");
+    }
+    if (!searchVal) {
+        responseValue = JSON.stringify({result: 'failure', message : 'no search value provided'});
+    } else {
+        let foundList = [];
+        bookList.forEach(function (item) {
+            let it = item.title.toUpperCase();
+            if (item.series) {
+                it = it + ";" + item.series.toUpperCase();
+            }
+            if (it.indexOf(decodeURIComponent(searchVal).toUpperCase()) >= 0) {
+                foundList.push(item);
+            }
+        });
+        if (foundList.length > 0) {
+            responseValue = JSON.stringify({result: 'success', list: foundList});
+        }
+    }
+
+    return responseValue;
 }
 
 function login(option, userList)
