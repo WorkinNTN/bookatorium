@@ -22,10 +22,10 @@ class App extends Component {
       loggedIn: false,
     }
 
-    this.loadBooks = this.loadBooks.bind(this);
-    this.loadBook = this.loadBook.bind(this);
-    this.loadUser = this.loadUser.bind(this);
-    this.showUser = this.showUser.bind(this);
+    //this.loadBooks = this.loadBooks.bind(this);
+    //this.loadBook = this.loadBook.bind(this);
+    //this.loadUser = this.loadUser.bind(this);
+    //this.showUser = this.showUser.bind(this);
   }
 
   loadBooks(books) {
@@ -76,13 +76,13 @@ class App extends Component {
         </div>
         <div className="App-intro">
           <div>
-            <button onClick={this.loadUser}>{loginButton}</button>
-            {(this.state.loggedIn) ? (<button onClick={this.showUser}>{showUserButton}</button>) :(null)}
+            <button onClick={() => this.loadUser()}>{loginButton}</button>
+            {(this.state.loggedIn) ? (<button onClick={() => this.showUser()}>{showUserButton}</button>) :(null)}
             <User currentUser={this.state.currentUser} showUser={this.state.showUser}/>
           </div>
           <div>
-            <BookSearch onSelectedBooks={this.loadBooks}/>
-            <SearchResults books={this.state.bookList} onSelectedBook={this.loadBook}/>
+            <BookSearch onSelectedBooks={(books) => this.loadBooks(books)}/>
+            <SearchResults books={this.state.bookList} onSelectedBook={(book) => this.loadBook(book)}/>
             <Book currentBook={this.state.currentBook} />
           </div>
           
