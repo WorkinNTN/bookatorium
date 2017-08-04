@@ -41,8 +41,14 @@ class Book extends Component {
                     {
                         (!srchResult) &&
                         <div>
+                        <div>
                             <span style={{fontWeight:"bold"}}>Year Published:</span>
                             <span style={{paddingLeft:"10px"}}>{this.props.currentBook.yearPublished}</span>
+                        </div>
+                        <div>
+                            <span style={{fontWeight:"bold"}}>Author:</span>
+                            <span style={{paddingLeft:"10px"}}>{this.props.currentBook.author}</span>
+                        </div>
                         </div>
                     }
                 </span>
