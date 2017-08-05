@@ -95,10 +95,13 @@ http.createServer( (req, res) => {
     } else if (urlPacket.route === '/LOGIN') {
         let loginResponse = login(urlPacket, users);
         res.end(loginResponse);
-    } else if (urlPacket.route.indexOf('/FINDBOOKS') === 0) {
+    } else if (urlPacket.route.indexOf('/SEARCHBOOKS') === 0) {
         let fbResponse = findbooks(urlPacket, books);
         res.end(fbResponse);
-    } else {
+    } else if (urlPacket.route.indexOf('/FINDBOOK') === 0) {
+        let fbResponse = findbook(urlPacket, books);
+        res.end(fbResponse);
+    }else {
         res.end( JSON.stringify({
             passedIn: urlPacket
         }));
@@ -143,7 +146,7 @@ function findbooks(option, bookList) {
             searchVal = option.parameters[0]['SEARCHVALUE'];
         }
     } else {
-        searchVal = option.originalPath.toUpperCase().replace("FINDBOOKS","").replace("//", "");
+        searchVal = option.originalPath.toUpperCase().replace("SEARCHBOOKS","").replace("//", "");
     }
     if (!searchVal) {
         responseValue = JSON.stringify({result: 'failure', message : 'no search value provided'});
@@ -160,6 +163,37 @@ function findbooks(option, bookList) {
         });
         if (foundList.length > 0) {
             responseValue = JSON.stringify({result: 'success', list: foundList});
+        }
+    }
+
+    return responseValue;
+}
+
+function findbook(option, bookList) {
+    let responseValue = JSON.stringify({result: 'failure', message : 'No book matched that id.'});
+    let searchVal = "";
+
+    if (option.parameters) {
+        let foundSearchVal = (Object.keys(option.parameters[0]).indexOf('ID') >= 0);
+        if (!foundSearchVal) {
+            responseValue = JSON.stringify({result: 'failure', message : 'Cannont find named parameter Id'});
+        } else {
+            searchVal = option.parameters[0]['ID'];
+        }
+    } else {
+        searchVal = option.originalPath.toUpperCase().replace("FINDBOOK","").replace("//", "");
+    }
+    if (!searchVal) {
+        responseValue = JSON.stringify({result: 'failure', message : 'no search value provided'});
+    } else {
+        let found = {};
+        bookList.forEach(function (item) {
+            if (item.id === parseInt(searchVal)) {
+                found = item;
+            }
+        });
+        if (found) {
+            responseValue = JSON.stringify({result: 'success', book: found});
         }
     }
 
