@@ -158,7 +158,11 @@ function findbooks(option, bookList) {
                 it = it + ";" + item.series.toUpperCase();
             }
             if (it.indexOf(decodeURIComponent(searchVal).toUpperCase()) >= 0) {
-                foundList.push(item);
+                foundList.push({
+                    id: item.id
+                    , title: item.title
+                    , isbn: item.isbn
+                });
             }
         });
         if (foundList.length > 0) {

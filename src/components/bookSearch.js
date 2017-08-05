@@ -67,7 +67,7 @@ class BookSearch extends Component {
 function doSearch(searchValue)
 {
   return new Promise(function(resolve, reject) {
-    request('http://localhost:8080/findbooks/' + searchValue, function(error, response, body) {
+    request('http://localhost:8080/searchbooks/' + searchValue, function(error, response, body) {
       let result = body;
       resolve(result)
     })
