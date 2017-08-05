@@ -4,7 +4,6 @@ import './App.css';
 import Book from './entities/book.js';
 import User from './entities/user.js';
 import BookSearch from './components/bookSearch.js';
-import SearchResults from './components/searchResults.js';
 
 /**
  * Bookatorium app
@@ -22,10 +21,6 @@ class App extends Component {
       loggedIn: false,
     }
 
-    //this.loadBooks = this.loadBooks.bind(this);
-    //this.loadBook = this.loadBook.bind(this);
-    //this.loadUser = this.loadUser.bind(this);
-    //this.showUser = this.showUser.bind(this);
   }
 
   loadBooks(books) {
@@ -81,8 +76,7 @@ class App extends Component {
             <User currentUser={this.state.currentUser} showUser={this.state.showUser}/>
           </div>
           <div>
-            <BookSearch onSelectedBooks={(books) => this.loadBooks(books)}/>
-            <SearchResults books={this.state.bookList} onSelectedBook={(book) => this.loadBook(book)}/>
+            <BookSearch onSelectedBook={(book) => this.loadBook(book)}/>
             <Book currentBook={this.state.currentBook} />
           </div>
           
