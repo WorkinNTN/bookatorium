@@ -19,12 +19,19 @@ class BookSearch extends Component {
     this.setState({value: event.target.value,});
   }
 
-  bookPicked(selectedBook) {
-      this.props.onSelectedBook(selectedBook);
+  async bookPicked(selectedBook) {
+    let result = await getBook(selectedBook);
+    result = JSON.parse(result);
+    if (result.result === 'success') {
+      this.props.onSelectedBook(result.book);
+    } else {
+      this.props.onSelectedBook({});
+    }
   }
   
   async handleSubmit(event) {
     event.preventDefault();
+    this.props.onSelectedBook({});
     
     let result = await doSearch(this.state.value);
     result = JSON.parse(result);
@@ -64,8 +71,7 @@ class BookSearch extends Component {
   }
 }
 
-function doSearch(searchValue)
-{
+function doSearch(searchValue) {
   return new Promise(function(resolve, reject) {
     request('http://localhost:8080/searchbooks/' + searchValue, function(error, response, body) {
       let result = body;
@@ -73,5 +79,15 @@ function doSearch(searchValue)
     })
   })
 }
+
+function getBook(book) {
+  return new Promise(function(resolve, reject) {
+    request('http://localhost:8080/findbook/' + book.id, function(error, response, body) {
+      let result = body;
+      resolve(result)
+    })
+  })
+}
+
 
 export default BookSearch;
