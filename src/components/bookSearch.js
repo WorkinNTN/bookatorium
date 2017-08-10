@@ -68,12 +68,12 @@ class BookSearch extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <label>
-          Search for a book:
+          <span>Book search:</span>
           <input type="text" placeholder="Enter search criteria" value={this.state.value} onChange={this.handleChange} />
         </label>
         <input type="submit" value="Submit" />
 
-        <ul>
+        <ul className="result-list">
           {listItems}
         </ul>
       </form>
