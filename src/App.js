@@ -35,7 +35,7 @@ class App extends Component {
     })
   }
 
-  loadUser() {
+  handleUser() {
     this.setState((prevState) => {
       if (prevState.loggedIn) {
         return {currentUser: {}, loggedIn: false,}
@@ -71,7 +71,7 @@ class App extends Component {
         </div>
         <div className="App-intro">
           <div className="App-user">
-            <button onClick={() => this.loadUser()}>{loginButton}</button>
+            <button onClick={() => this.handleUser()}>{loginButton}</button>
             {(this.state.loggedIn) ? (<button onClick={() => this.showUser()}>{showUserButton}</button>) :(null)}
             <User currentUser={this.state.currentUser} showUser={this.state.showUser}/>
           </div>
