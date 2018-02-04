@@ -4,6 +4,7 @@ import './App.css';
 import Book from './entities/book.js';
 import User from './entities/user.js';
 import BookSearch from './components/bookSearch.js';
+import GetEmailAddresses from './components/getEmailAddresses.js';
 
 /**
  * Bookatorium app
@@ -80,6 +81,9 @@ class App extends Component {
             <Book currentBook={this.state.currentBook} />
           </div>
           
+          <div>
+            <GetEmailAddresses/>
+          </div>
         </div>
       </div>
     );
