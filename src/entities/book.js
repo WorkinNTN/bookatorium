@@ -8,7 +8,7 @@ class Book extends Component {
         const emptyBook = !(this.props.currentBook.title);
         const srchResult = this.props.srchResult;
         return (
-            <div>
+            <div className="App-book">
             {
                 (!emptyBook) &&
                 <span>
@@ -19,35 +19,35 @@ class Book extends Component {
                                 (this.props.currentBook.series) &&
                                 <span>
                                 <div>
-                                    <span style={{fontWeight:"bold"}}>Series:</span>
-                                    <span style={{paddingLeft:"10px"}}>{this.props.currentBook.series}</span>
+                                    <span className="book-label">Series:</span>
+                                    <span className="book-info">{this.props.currentBook.series}</span>
                                 </div>
                                 <div>
-                                    <span style={{fontWeight:"bold"}}>Series #:</span>
-                                    <span style={{paddingLeft:"10px"}}>{this.props.currentBook.seriesNo}</span>
+                                    <span className="book-label">Series #:</span>
+                                    <span className="book-info">{this.props.currentBook.seriesNo}</span>
                                 </div>
                                 </span>
                             }
                         </div>
                     }
                     <div>
-                        <span style={{fontWeight:"bold"}}>Title:</span>
-                        <span style={{paddingLeft:"10px"}}>{this.props.currentBook.title}</span>
+                        <span className="book-label">Title:</span>
+                        <span className="book-info">{this.props.currentBook.title}</span>
                     </div>
                     <div>
-                        <span style={{fontWeight:"bold"}}>ISBN:</span>
-                        <span style={{paddingLeft:"10px"}}>{this.props.currentBook.isbn}</span>
+                        <span className="book-label">ISBN:</span>
+                        <span className="book-info">{this.props.currentBook.isbn}</span>
                     </div>
                     {
                         (!srchResult) &&
                         <div>
                         <div>
-                            <span style={{fontWeight:"bold"}}>Year Published:</span>
-                            <span style={{paddingLeft:"10px"}}>{this.props.currentBook.yearPublished}</span>
+                            <span className="book-label">Year Published:</span>
+                            <span className="book-info">{this.props.currentBook.yearPublished}</span>
                         </div>
                         <div>
-                            <span style={{fontWeight:"bold"}}>Author:</span>
-                            <span style={{paddingLeft:"10px"}}>{this.props.currentBook.author}</span>
+                            <span className="book-label">Author:</span>
+                            <span className="book-info">{this.props.currentBook.author}</span>
                         </div>
                         </div>
                     }

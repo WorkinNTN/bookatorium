@@ -35,7 +35,7 @@ const books = [
         title: "Mr. Mysterious & Company",
         yearPublished: 1962,
         isbn: "0-688-14921-9",
-        author: "Fleischman",
+        author: "Fleischman, Sid",
     },
     {
         id: 5,

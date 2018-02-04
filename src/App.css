@@ -6,6 +6,12 @@
   height: 80px;
 }
 
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+
 .App-header {
   background-color: #222;
   height: 150px;
@@ -14,10 +20,57 @@
 }
 
 .App-intro {
-  font-size: large;
+  font-size: inherit;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.App-intro .App-book .book-label {
+  font-weight: bold;
+}
+
+.App-intro .App-book .book-info {
+  padding-left: 10px;
+}
+
+.App-intro .App-user {
+  background-color: red;
+}
+
+.App-intro .App-search {
+  float:left;
+  margin-top: 10px;
+  background-color: blue;
+  width: 45%;
+}
+
+.App-intro .App-search .result-list {
+  text-align: left;
+  padding: 0;
+  margin-top: 10px;
+  margin-bottom: 5px; 
+  margin-right: 0;
+  margin-left: 10px;
+  list-style: none;
+}
+
+.App-intro .App-search .result-list li {
+  margin-top: 0;
+  margin-bottom: 3px; 
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.App-intro .App-result {
+  float: left;
+  margin-top: 10px;
+  margin-left: 10px;
+  background-color: green;
+  width: 50%;
+}
+
+.App-intro .App-result .App-book {
+  text-align: left;
+}
+
+.App-intro .book-label {
+  font-weight: bold;
 }

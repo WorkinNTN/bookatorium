@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Book from '../entities/book.js';
-var request = require('request');
+import axios from 'axios';
 
 class BookSearch extends Component {
   constructor(props) {
@@ -20,20 +20,38 @@ class BookSearch extends Component {
   }
 
   bookPicked(selectedBook) {
-      this.props.onSelectedBook(selectedBook);
+    let self = this;
+    getBook(selectedBook).then(function (success) {
+      let result = success.data;
+      if (result.result === 'success') {
+        self.props.onSelectedBook(result.book);
+      } else {
+        console.log("Server side issue: " + result.result);
+        self.props.onSelectedBook({});
+      }
+    })
+    .catch(function (error) {
+      console.log("Error:" + error);
+      self.props.onSelectedBook({});
+    });
   }
   
-  async handleSubmit(event) {
+  handleSubmit(event) {
     event.preventDefault();
+    this.props.onSelectedBook({});
+    let self = this;
     
-    let result = await doSearch(this.state.value);
-    result = JSON.parse(result);
-    let returnValue = [];
-    if (result.result === 'success') {
-      returnValue = result.list;
-    }
-
-    this.setState({books: returnValue});
+    doSearch(this.state.value).then(function (success) {
+      let result = success.data;
+      let returnValue = [];
+      if (result.result === 'success') {
+        returnValue = result.list;
+      }
+      self.setState({books: returnValue});
+    })
+    .catch(function (error) {
+      console.log("Error:" + error);
+    });
   }
 
   render() {
@@ -50,12 +68,12 @@ class BookSearch extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <label>
-          Search for a book:
+          <span>Book search:</span>
           <input type="text" placeholder="Enter search criteria" value={this.state.value} onChange={this.handleChange} />
         </label>
         <input type="submit" value="Submit" />
 
-        <ul>
+        <ul className="result-list">
           {listItems}
         </ul>
       </form>
@@ -64,14 +82,12 @@ class BookSearch extends Component {
   }
 }
 
-function doSearch(searchValue)
-{
-  return new Promise(function(resolve, reject) {
-    request('http://localhost:8080/searchbooks/' + searchValue, function(error, response, body) {
-      let result = body;
-      resolve(result)
-    })
-  })
+function doSearch(searchValue) {
+  return axios.get('http://localhost:8080/searchbooks/' + searchValue);
+}
+
+function getBook(book) {
+  return axios.get('http://localhost:8080/findbook/' + book.id)
 }
 
 export default BookSearch;
