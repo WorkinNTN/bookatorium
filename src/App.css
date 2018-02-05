@@ -74,3 +74,11 @@
 .App-intro .book-label {
   font-weight: bold;
 }
+
+.App-intro .App-email {
+  float: left;
+  width: 45%;
+  margin-left: 10px;
+  margin-top: 10px;
+  background-color: orange;
+}

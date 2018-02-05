@@ -32,11 +32,18 @@ class GetEmailAddresses extends Component {
     }
 
     handleDone = (completed) => {
-        alert("Completed is " + completed)
+        
+        this.handleClear();
+        if (completed) {
+            if (this.props.asArray) {
+                this.props.onSubmittedList(this.state.addressList);
+            } else {
+                this.props.onSubmittedList(this.state.addressList.join());
+            }
+        }
     }
 
     handleCancel = () => {
-        alert("Cancelling operation")
     }
 
     handleClear = () => {
@@ -70,9 +77,9 @@ class GetEmailAddresses extends Component {
             </ul>
 
             <div>
-                <button onClick={() => this.handleDone(true)}>Submit</button>
+                <button onClick={() => this.handleDone(true)} disabled={this.state.addressList.length === 0}>Submit</button>
                 <button onClick={() => this.handleDone(false)}>Cancel</button>
-                <button onClick={() => this.handleClear()}>Clear List</button>
+                <button onClick={() => this.handleClear()} disabled={this.state.addressList.length === 0}>Clear List</button>
             </div>
 
           </div>

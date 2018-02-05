@@ -20,6 +20,7 @@ class App extends Component {
       currentUser: {},
       showUser: false,
       loggedIn: false,
+      emailList: '',
     }
 
   }
@@ -34,6 +35,11 @@ class App extends Component {
     this.setState({
       currentBook: book,
     })
+  }
+
+  setAddresses(list)
+  {
+    this.setState({emailList: list,});
   }
 
   handleUser() {
@@ -76,16 +82,20 @@ class App extends Component {
             {(this.state.loggedIn) ? (<button onClick={() => this.showUser()}>{showUserButton}</button>) :(null)}
             <User currentUser={this.state.currentUser} showUser={this.state.showUser}/>
           </div>
+
           <div className="App-search">
             <BookSearch onSelectedBook={(book) => this.loadBook(book)}/>
           </div>
+
+          <div className="App-email">
+            <GetEmailAddresses onSubmittedList={(theList) => this.setAddresses(theList)} asArray={false} addresses={["start@one.com","finish@two.com"]}/>
+          </div>
+
           <div className="App-result">
-            <Book currentBook={this.state.currentBook} />
+            <Book currentBook={this.state.currentBook}/>
+            <div>{this.state.emailList}</div>
           </div>
           
-          <div>
-            <GetEmailAddresses/>
-          </div>
         </div>
       </div>
     );

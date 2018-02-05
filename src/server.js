@@ -153,7 +153,7 @@ function findbooks(option, bookList) {
     } else {
         let foundList = [];
         bookList.forEach(function (item) {
-            let it = item.title.toUpperCase();
+            let it = item.title.toUpperCase() + ";" + item.author.toUpperCase();
             if (item.series) {
                 it = it + ";" + item.series.toUpperCase();
             }
