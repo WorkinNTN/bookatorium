@@ -5,11 +5,11 @@ class GetEmailAddresses extends Component {
     constructor(props) {
         super(props);
 
-        let x = this.props.addresses;
+        let x = this.props.initialAddresses;
         if (!x) {
             x = [];
         } else if (!Array.isArray(x)) {
-            x = [];
+            x = x.split(",");
         }
 
         this.state = {
@@ -31,19 +31,27 @@ class GetEmailAddresses extends Component {
         });
     }
 
-    handleDone = (completed) => {
-        
-        this.handleClear();
-        if (completed) {
-            if (this.props.asArray) {
-                this.props.onSubmittedList(this.state.addressList);
-            } else {
-                this.props.onSubmittedList(this.state.addressList.join());
-            }
-        }
+    handleDelete = (address) => {
+        let arr = this.state.addressList.filter(e => e !== address.address);
+        this.setState({
+            addressList: arr,
+        });
     }
 
+    handleSubmitted = () => {
+        
+        this.handleClear();
+        if (this.props.returnAsArray) {
+            this.props.onSubmitted(this.state.addressList);
+        } else {
+            this.props.onSubmitted(this.state.addressList.join());
+        }
+}
+
     handleCancel = () => {
+        
+        this.handleClear();
+        this.props.onCancelled();
     }
 
     handleClear = () => {
@@ -60,7 +68,10 @@ class GetEmailAddresses extends Component {
         {
             listItems = addresses.map((address) => 
             <span key={address}>
-                <li>{address}</li>
+                <div>
+                    <span>{address}</span>
+                    <button onClick={() => this.handleDelete({address})}>X</button>
+                </div>
             </span> );
         }
 
@@ -72,13 +83,13 @@ class GetEmailAddresses extends Component {
             </label>
             <button onClick={() => this.handleAdd()}>Add address</button>
             
-            <ul>
+            <div>
               {listItems}
-            </ul>
+            </div>
 
             <div>
-                <button onClick={() => this.handleDone(true)} disabled={this.state.addressList.length === 0}>Submit</button>
-                <button onClick={() => this.handleDone(false)}>Cancel</button>
+                <button onClick={() => this.handleSubmitted()} disabled={this.state.addressList.length === 0}>Submit</button>
+                <button onClick={() => this.handleCancel()}>Cancel</button>
                 <button onClick={() => this.handleClear()} disabled={this.state.addressList.length === 0}>Clear List</button>
             </div>
 

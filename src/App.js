@@ -37,9 +37,12 @@ class App extends Component {
     })
   }
 
-  setAddresses(list)
-  {
+  setAddresses(list) {
     this.setState({emailList: list,});
+  }
+
+  cancelled() {
+
   }
 
   handleUser() {
@@ -88,7 +91,11 @@ class App extends Component {
           </div>
 
           <div className="App-email">
-            <GetEmailAddresses onSubmittedList={(theList) => this.setAddresses(theList)} asArray={false} addresses={["start@one.com","finish@two.com"]}/>
+            <GetEmailAddresses 
+              onSubmitted={(theList) => this.setAddresses(theList)} 
+              onCancelled={() => this.cancelled()}
+              returnAsArray={false} 
+              initialAddresses={"start@one.com,delete@me.com,finish@two.com"}/>
           </div>
 
           <div className="App-result">
