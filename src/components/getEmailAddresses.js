@@ -16,6 +16,9 @@ class GetEmailAddresses extends Component {
             addressList: x,
             emailAddress: '',
         }
+    }
+
+    componentDidMount() {
         this.postBack();
     }
 
@@ -23,7 +26,7 @@ class GetEmailAddresses extends Component {
         this.setState({emailAddress: event.target.value,});
     }
 
-    handleAdd = () => {
+    add = () => {
         let temp = this.state.addressList;
         temp.push(this.state.emailAddress);
         this.setState({
@@ -33,7 +36,7 @@ class GetEmailAddresses extends Component {
         
     }
 
-    handleDelete = (address) => {
+    delete = (address) => {
         let arr = this.state.addressList.filter(e => e !== address.address);
         this.setState({
             addressList: arr,
@@ -51,13 +54,18 @@ class GetEmailAddresses extends Component {
         }
     }
 
-    handleClear = () => {
+    clearAll = () => {
         this.setState({
             addressList: [],
             emailAddress: ''
         }, () => {this.postBack();});
     }
 
+    submitted(event) {
+        event.preventDefault();
+        this.add();
+    }
+        
     render() {
         const addresses = this.state.addressList;
         let listItems = null
@@ -67,28 +75,24 @@ class GetEmailAddresses extends Component {
             <span key={address}>
                 <div>
                     <span>{address}</span>
-                    <button onClick={() => this.handleDelete({address})}>X</button>
+                    <button onClick={() => this.delete({address})}>X</button>
                 </div>
             </span> );
         }
 
         return (
-        <div>
-           <label>
-             Enter email address:
-              <input type="text" placeholder="Enter email address" value={this.state.emailAddress} onChange={(e) => {this.handleChange(e)}}/>
-            </label>
-            <button onClick={() => this.handleAdd()}>Add address</button>
+            <form onSubmit={this.submitted}>
+                <label>
+                    Enter email address:
+                    <input type="text" placeholder="Enter email address" value={this.state.emailAddress} onChange={this.handleChange}/>
+                </label>
+                <button onClick={() => this.add()}>Add</button>
+                <button onClick={() => this.clearAll()} disabled={this.state.addressList.length === 0}>Clear All</button>
             
-            <div>
-              {listItems}
-            </div>
-
-            <div>
-                <button onClick={() => this.handleClear()} disabled={this.state.addressList.length === 0}>Clear List</button>
-            </div>
-
-          </div>
+                <div>
+                    {listItems}
+                </div>
+          </form>
         );
     }
     
