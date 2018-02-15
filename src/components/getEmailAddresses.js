@@ -16,6 +16,7 @@ class GetEmailAddresses extends Component {
             addressList: x,
             emailAddress: '',
         }
+        this.postBack();
     }
 
     handleChange = (event) => {
@@ -28,37 +29,33 @@ class GetEmailAddresses extends Component {
         this.setState({
             addressList: temp,
             emailAddress: ''
-        });
+        }, () => {this.postBack();});
+        
     }
 
     handleDelete = (address) => {
         let arr = this.state.addressList.filter(e => e !== address.address);
         this.setState({
             addressList: arr,
-        });
+        }, () => {this.postBack();});
+        
     }
 
-    handleSubmitted = () => {
+    postBack = () => {
         
-        this.handleClear();
+        // this.handleClear();
         if (this.props.returnAsArray) {
             this.props.onSubmitted(this.state.addressList);
         } else {
             this.props.onSubmitted(this.state.addressList.join());
         }
-}
-
-    handleCancel = () => {
-        
-        this.handleClear();
-        this.props.onCancelled();
     }
 
     handleClear = () => {
         this.setState({
             addressList: [],
             emailAddress: ''
-        });
+        }, () => {this.postBack();});
     }
 
     render() {
@@ -88,8 +85,6 @@ class GetEmailAddresses extends Component {
             </div>
 
             <div>
-                <button onClick={() => this.handleSubmitted()} disabled={this.state.addressList.length === 0}>Submit</button>
-                <button onClick={() => this.handleCancel()}>Cancel</button>
                 <button onClick={() => this.handleClear()} disabled={this.state.addressList.length === 0}>Clear List</button>
             </div>
 
