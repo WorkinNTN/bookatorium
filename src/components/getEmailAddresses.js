@@ -32,8 +32,8 @@ class GetEmailAddresses extends Component {
             let temp = this.state.addressList;
             temp.push(this.state.emailAddress);
             this.setState({
-               addressList: temp,
-               emailAddress: ''
+                addressList: temp,
+                emailAddress: ''
             }, () => {this.postBack();});
         } 
     }
@@ -97,7 +97,7 @@ class GetEmailAddresses extends Component {
                 <div>
                     {listItems}
                 </div>
-          </form>
+            </form>
         );
     }
     
