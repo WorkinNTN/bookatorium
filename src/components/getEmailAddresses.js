@@ -15,6 +15,7 @@ class GetEmailAddresses extends Component {
         this.state = {
             addressList: x,
             emailAddress: '',
+            showClear: this.props.showClear,
         }
     }
 
@@ -80,6 +81,11 @@ class GetEmailAddresses extends Component {
             </span> );
         }
 
+        let clearButton = null;
+        if (this.state.showClear) {
+            clearButton = <button onClick={() => this.clearAll()} disabled={this.state.addressList.length === 0}>Clear All</button>;
+        }
+
         return (
             <form onSubmit={this.submitted}>
                 <label>
@@ -87,8 +93,7 @@ class GetEmailAddresses extends Component {
                     <input type="text" placeholder="Enter email address" value={this.state.emailAddress} onChange={this.handleChange}/>
                 </label>
                 <button onClick={() => this.add()}>Add</button>
-                <button onClick={() => this.clearAll()} disabled={this.state.addressList.length === 0}>Clear All</button>
-            
+                {clearButton}
                 <div>
                     {listItems}
                 </div>

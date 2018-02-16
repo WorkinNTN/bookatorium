@@ -25,27 +25,27 @@ class App extends Component {
 
   }
 
-  loadBooks(books) {
+  loadBooks = (books) => {
     this.setState({
       bookList: books,
     })
   }
 
-  loadBook(book) {
+  loadBook = (book) => {
     this.setState({
       currentBook: book,
     })
   }
 
-  setAddresses(list) {
+  setAddresses = (list) => {
     this.setState({emailList: list,});
   }
 
-  cancelled() {
+  cancelled = () => {
 
   }
 
-  handleUser() {
+  handleUser = () => {
     this.setState((prevState) => {
       if (prevState.loggedIn) {
         return {currentUser: {}, loggedIn: false,}
@@ -61,7 +61,7 @@ class App extends Component {
     });
   }
 
-  showUser() {
+  showUser = () => {
     this.setState((prevState) => {
       return {showUser: !prevState.showUser};
     });    
@@ -92,8 +92,8 @@ class App extends Component {
 
           <div className="App-email">
             <GetEmailAddresses 
-              onSubmitted={(theList) => this.setAddresses(theList)} 
-              onCancelled={() => this.cancelled()}
+              onSubmitted={(theList) => this.setAddresses(theList)}
+              showClear={false}
               returnAsArray={false} 
               initialAddresses={"start@one.com,delete@me.com,finish@two.com"}/>
           </div>

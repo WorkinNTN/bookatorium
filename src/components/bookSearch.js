@@ -15,11 +15,11 @@ class BookSearch extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(event) {
+  handleChange = (event) => {
     this.setState({value: event.target.value,});
   }
 
-  bookPicked(selectedBook) {
+  bookPicked = (selectedBook) => {
     let self = this;
     getBook(selectedBook).then(function (success) {
       let result = success.data;
@@ -36,7 +36,7 @@ class BookSearch extends Component {
     });
   }
   
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
     this.props.onSelectedBook({});
     let self = this;
