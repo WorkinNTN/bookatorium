@@ -64,6 +64,22 @@ const books = [
         isbn: "0-06-023488-1",
         author: "Lewis, C.S.",
     },
+    {
+        id: 8, 
+        title: "Beginning ASP.NET 4.5 in C#", 
+        yearPublished: 2012, 
+        isbn: "978-1-4302-4251-2", 
+        author: "MacDonald, Matthew"
+    },
+    {
+        id: 9, 
+        series: "Microsoft .Net Development Series", 
+        seriesNo: -1, 
+        title: "Designing Forms for Microsoft Office InfoPath and Forms Services 2007", 
+        yearPublished: 2007, 
+        isbn: "0-321-41059-9", 
+        author: "Roberts, Scott"
+    }
 ]
 
 const users = [
