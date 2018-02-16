@@ -27,13 +27,14 @@ class GetEmailAddresses extends Component {
     }
 
     add = () => {
-        let temp = this.state.addressList;
-        temp.push(this.state.emailAddress);
-        this.setState({
-            addressList: temp,
-            emailAddress: ''
-        }, () => {this.postBack();});
-        
+        if (this.state.emailAddress.length > 0){
+            let temp = this.state.addressList;
+            temp.push(this.state.emailAddress);
+            this.setState({
+               addressList: temp,
+               emailAddress: ''
+            }, () => {this.postBack();});
+        } 
     }
 
     delete = (address) => {
@@ -46,7 +47,6 @@ class GetEmailAddresses extends Component {
 
     postBack = () => {
         
-        // this.handleClear();
         if (this.props.returnAsArray) {
             this.props.onSubmitted(this.state.addressList);
         } else {
@@ -61,7 +61,7 @@ class GetEmailAddresses extends Component {
         }, () => {this.postBack();});
     }
 
-    submitted(event) {
+    submitted  = (event)  => {
         event.preventDefault();
         this.add();
     }
